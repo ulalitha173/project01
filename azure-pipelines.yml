@@ -20,9 +20,9 @@ steps:
   displayName: Build WAR
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(agent.builddirectory)/webapp/target'
+    SourceFolder: '$(agent.builddirectory)/s/webapp/target'
     Contents: '*.war'
-    TargetFolder: '$(build.artifactstagingdirectory)'
+    TargetFolder: '$(build.artifactstagingdirectory)/a'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
