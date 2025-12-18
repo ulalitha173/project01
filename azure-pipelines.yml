@@ -22,7 +22,7 @@ steps:
   inputs:
     SourceFolder: '$(agent.builddirectory)/s/webapp/target'
     Contents: '*.war'
-    TargetFolder: '$(build.artifactstagingdirectory)/a'
+    TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
