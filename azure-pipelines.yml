@@ -3,29 +3,29 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-trigger:
-- master
+#trigger:
+#- master
 
-pool:
-  name: SelfHostedPool
+#pool:
+#  name: SelfHostedPool
 
-steps:
-- script: java -version
-  displayName: Check Java
+#steps:
+#- script: java -version
+#  displayName: Check Java
 
-- script: mvn -version
-  displayName: Check Maven
+#- script: mvn -version
+#  displayName: Check Maven
 
-- script: mvn clean install
-  displayName: Build WAR
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(agent.builddirectory)/s/webapp/target'
-    Contents: '*.war'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'warfile'
-    publishLocation: 'Container'
+#- script: mvn clean install
+#  displayName: Build WAR
+#- task: CopyFiles@2
+#  inputs:
+#    SourceFolder: '$(agent.builddirectory)/s/webapp/target'
+#    Contents: '*.war'
+#    TargetFolder: '$(build.artifactstagingdirectory)'
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    ArtifactName: 'warfile'
+#    publishLocation: 'Container'
 
