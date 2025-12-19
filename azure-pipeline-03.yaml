@@ -24,7 +24,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: 'target'
-        artifact: '$(artifactName)/*.jar'
+        artifact: $(artifactName)
 
 # ================= TEST =================
 - stage: Test
@@ -54,7 +54,7 @@ stages:
         deploy:
           steps:
           - download: current
-            artifact: '$(artifactName)/*.jar'
+            artifact: $(artifactName)
 
           - task: AzureWebApp@1
             inputs:
