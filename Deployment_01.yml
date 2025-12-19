@@ -1,0 +1,98 @@
+trigger:
+- main
+
+variables:
+  artifactName: drop
+  azureServiceConnection: 'Azure-Service-Connection'
+  webAppName: 'lalitha173-hggvhvandndtc3an'
+
+stages:
+
+# ================= BUILD =================
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: BuildJob
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: pom.xml
+        goals: clean package
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: target
+        artifact: $(artifactName)
+
+# ================= DEV =================
+- stage: Dev
+  displayName: Deploy to Dev
+  dependsOn: Build
+  jobs:
+  - deployment: DevDeploy
+    displayName: Dev Deployment
+    environment: Dev
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              appType: webAppLinux
+              appName: $(webAppName)
+              package: '$(Pipeline.Workspace)/$(artifactName)/*.jar'
+
+# ================= QA =================
+- stage: QA
+  displayName: Deploy to QA
+  dependsOn: Dev
+  jobs:
+  - deployment: QADeploy
+    displayName: QA Deployment
+    environment: QA   # Approval here
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              appType: webAppLinux
+              appName: $(webAppName)
+              package: '$(Pipeline.Workspace)/$(artifactName)/*.jar'
+
+# ================= PROD =================
+- stage: Prod
+  displayName: Deploy to Prod
+  dependsOn: QA
+  jobs:
+  - deployment: ProdDeploy
+    displayName: Prod Deployment
+    environment: Prod   # Approval here
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              appType: webAppLinux
+              appName: $(webAppName)
+              package: '$(Pipeline.Workspace)/$(artifactName)/*.jar'
