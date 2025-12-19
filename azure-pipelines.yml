@@ -34,7 +34,7 @@ trigger:
 - main
 
 variables:
-  artifactName: drop
+  artifactName: arti01
   azureServiceConnection: 'Azure-Service-Connection'
   webAppName: 'lalitha173-hggvhvandndtc3an'
 
@@ -54,7 +54,7 @@ stages:
         goals: clean package
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: target
+        targetPath: webapp/target
         artifact: $(artifactName)
 
 # ================= DEV =================
