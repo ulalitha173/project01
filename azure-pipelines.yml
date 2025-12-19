@@ -79,7 +79,7 @@ stages:
               azureSubscription: $(azureServiceConnection)
               appType: webAppLinux
               appName: lalitha173
-              package: '$(Pipeline.Workspace)/$(artifactName)/*.jar'
+              package: '$(Pipeline.Workspace)/webapp/target/*.jar'
 
 # ================= QA =================
 - stage: QA
