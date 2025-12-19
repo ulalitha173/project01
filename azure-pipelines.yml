@@ -103,7 +103,7 @@ stages:
               azureSubscription: $(azureServiceConnection)
               appType: webAppLinux
               appName: lalitha173
-              package: '$(Pipeline.Workspace)/$(artifactName)/*.jar'
+              package: '$(Pipeline.Workspace)/**/*.war'
 
 # ================= PROD =================
 - stage: Prod
@@ -127,4 +127,4 @@ stages:
               azureSubscription: $(azureServiceConnection)
               appType: webAppLinux
               appName: lalitha173
-              package: '$(Pipeline.Workspace)/$(artifactName)/*.jar'
+              package: '$(Pipeline.Workspace)/**/*.war'
