@@ -34,7 +34,7 @@ trigger:
 - main
 
 variables:
-  artifactName: arti01
+  artifactName: drop
   azureServiceConnection: 'Azure-Service-Connection'
   webAppName: 'lalitha173-hggvhvandndtc3an'
 
